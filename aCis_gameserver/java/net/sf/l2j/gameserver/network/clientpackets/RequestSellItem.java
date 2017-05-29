@@ -81,13 +81,15 @@ public final class RequestSellItem extends L2GameClientPacket
 				continue;
 			
 			int price = item.getReferencePrice() / 2;
-			totalPrice += price * i.getValue();
+			totalPrice = 0;
 			if ((Integer.MAX_VALUE / i.getValue()) < price || totalPrice > Integer.MAX_VALUE)
 				return;
 			
 			item = player.getInventory().destroyItem("Sell", i.getId(), i.getValue(), player, merchant);
 		}
-		
+
+		// Sell for 0 adenas
+		totalPrice = 0;
 		player.addAdena("Sell", totalPrice, merchant, false);
 		
 		// Send the htm, if existing.

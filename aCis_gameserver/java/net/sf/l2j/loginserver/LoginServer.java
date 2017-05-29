@@ -42,7 +42,10 @@ public class LoginServer
 		new File("./log").mkdir();
 		new File("./log/console").mkdir();
 		new File("./log/error").mkdir();
-		
+
+		System.out.println("Working Directory = " +
+				System.getProperty("user.dir"));
+
 		// Create input stream for log file -- or store file data into memory
 		try (InputStream is = new FileInputStream(new File("config/logging.properties")))
 		{

@@ -28,6 +28,7 @@ import net.sf.l2j.gameserver.skills.basefuncs.Func;
 import net.sf.l2j.gameserver.skills.basefuncs.FuncTemplate;
 import net.sf.l2j.gameserver.skills.conditions.Condition;
 import net.sf.l2j.gameserver.templates.StatsSet;
+import net.sf.l2j.gameserver.util.Broadcast;
 
 /**
  * This class contains all informations concerning the item (weapon, armor, etc). Mother class of :
@@ -457,6 +458,7 @@ public abstract class Item
 	 */
 	public final IntIntHolder[] getSkills()
 	{
+
 		return _skillHolder;
 	}
 	

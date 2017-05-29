@@ -459,7 +459,7 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
 	 */
 	public int getReferencePrice()
 	{
-		return _item.getReferencePrice();
+		return 0;
 	}
 	
 	/**

@@ -23,12 +23,14 @@ public class ConditionPlayerWeight extends Condition
 	@Override
 	public boolean testImpl(Env env)
 	{
+
 		final Player player = env.getPlayer();
 		if (player != null && player.getMaxLoad() > 0)
 		{
 			int weightproc = player.getCurrentLoad() * 100 / player.getMaxLoad();
 			return weightproc < _weight;
 		}
+
 		return true;
 	}
 }

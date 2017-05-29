@@ -13,6 +13,7 @@ import net.sf.l2j.gameserver.model.item.type.EtcItemType;
 import net.sf.l2j.gameserver.network.SystemMessageId;
 import net.sf.l2j.gameserver.network.serverpackets.ExUseSharedGroupItem;
 import net.sf.l2j.gameserver.network.serverpackets.SystemMessage;
+import net.sf.l2j.gameserver.util.Broadcast;
 
 /**
  * Template for item skills handler.
@@ -50,7 +51,7 @@ public class ItemSkills implements IItemHandler
 			final L2Skill itemSkill = skillInfo.getSkill();
 			if (itemSkill == null)
 				continue;
-			
+
 			if (!itemSkill.checkCondition(playable, playable.getTarget(), false))
 				return;
 			
@@ -60,29 +61,33 @@ public class ItemSkills implements IItemHandler
 			
 			if (!itemSkill.isPotion() && playable.isCastingNow())
 				return;
-			
+
 			// Item consumption is setup here.
 			if (itemSkill.isPotion() || itemSkill.isSimultaneousCast())
 			{
+
 				if (!item.isHerb())
 				{
 					// Normal item consumption is 1, if more, it must be given in DP with getItemConsume().
-					if (!playable.destroyItem("Consume", item.getObjectId(), (itemSkill.getItemConsumeId() == 0 && itemSkill.getItemConsume() > 0) ? itemSkill.getItemConsume() : 1, null, false))
+					if (!activeChar.destroyItem("Destroy", item.getObjectId(), (itemSkill.getItemConsumeId() == 0 && itemSkill.getItemConsume() > 0) ? itemSkill.getItemConsume() : 1, null, true))
 					{
-						activeChar.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
+						activeChar.setMultiSell(null);
 						return;
 					}
 				}
-				
+
 				playable.doSimultaneousCast(itemSkill);
 				// Summons should be affected by herbs too, self time effect is handled at L2Effect constructor.
 				if (!isPet && item.getItemType() == EtcItemType.HERB && activeChar.hasServitor())
 					activeChar.getPet().doSimultaneousCast(itemSkill);
+
+
 			}
 			else
 			{
+
 				// Normal item consumption is 1, if more, it must be given in DP with getItemConsume().
-				if (!playable.destroyItem("Consume", item.getObjectId(), (itemSkill.getItemConsumeId() == 0 && itemSkill.getItemConsume() > 0) ? itemSkill.getItemConsume() : 1, null, false))
+				if (!playable.destroyItem("Consume", item.getObjectId(), 1, null, false))
 				{
 					activeChar.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
 					return;
@@ -92,7 +97,7 @@ public class ItemSkills implements IItemHandler
 				if (!playable.useMagic(itemSkill, forceUse, false))
 					return;
 			}
-			
+
 			// Send message to owner.
 			if (isPet)
 				activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.PET_USES_S1).addSkillName(itemSkill));
@@ -148,5 +153,8 @@ public class ItemSkills implements IItemHandler
 				playable.disableSkill(itemSkill, reuseDelay);
 			}
 		}
+
+
 	}
+
 }

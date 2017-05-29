@@ -1499,9 +1499,11 @@ public final class Player extends Playable
 		
 		if (con > 59)
 			return 176000;
-		
+
+		//Multiply the weight limit
+		double weight_max_multiplier = 999;
 		double baseLoad = Math.pow(1.029993928, con) * 30495.627366;
-		return (int) calcStat(Stats.MAX_LOAD, baseLoad * Config.ALT_WEIGHT_LIMIT, this, null);
+		return (int) calcStat(Stats.MAX_LOAD, baseLoad * Config.ALT_WEIGHT_LIMIT * weight_max_multiplier, this, null);
 	}
 	
 	public int getExpertiseArmorPenalty()

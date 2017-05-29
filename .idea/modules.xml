@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Server_t.iml" filepath="$PROJECT_DIR$/.idea/Server_t.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aCis_gameserver/aCis_gameserver.iml" filepath="$PROJECT_DIR$/aCis_gameserver/aCis_gameserver.iml" />
     </modules>
   </component>
 </project>
